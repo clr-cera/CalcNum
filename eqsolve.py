@@ -154,6 +154,69 @@ def gradient_conj(A: np.ndarray, b: np.ndarray):
     return x0
 
 
-print(gradient_conj(A, b))
-print(np.linalg.solve(A, b))
+#print(gradient_conj(A, b))
+#print(np.linalg.solve(A, b))
 #print(gauss_jacobi(A,b))
+
+def bissecao(f, a, b):
+    x = (a + b) / 2
+    tol = 0.005
+
+    for i in range(50000):
+        if f(a) * f(x) < 0:
+            b = x
+
+        else:
+            a = x
+
+        print(a, b, x)
+        if i == 100:
+            exit()
+        
+
+        x = (a + b) / 2
+        erro = abs(f(x))
+
+        if erro < tol:
+            break
+    return x
+
+f = lambda x: x**2 + x - 6
+d = lambda x: 2*x + 1
+
+# print(bissecao(f, -12, 24))
+
+def newton(f, d):
+    x = 5.5
+    tol = 0.0005
+    while True:
+        dx = f(x)/d(x) if d(x) else 0
+        x = x - dx
+        if abs(dx) < tol:
+            return x
+
+def secantes(f):
+    x0 = 5
+    x1 = 5.5
+    tol = 0.0005
+    f0 = f(0)
+    while True:
+        f1 = f(x1)
+        ds = f1*(x1-x0) / (f1-f0)
+        x0 = x1
+        x1 = x1-ds
+        if abs(ds) < tol:
+            return x1
+
+def ponto_fixo(f):
+    x = 0
+    tol = 0.0005
+    while True:
+        x = (6-x)**(1/2)
+
+        if abs(f(x)) < tol:
+            return x
+
+print(newton(f,d))
+print(secantes(f))
+print(ponto_fixo(f))
