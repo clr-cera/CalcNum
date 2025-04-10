@@ -210,12 +210,19 @@ def secantes(f):
 
 def ponto_fixo(f):
     x = 0
+    xa = x
+    xaa = xa
     tol = 0.0005
     while True:
+        xaa = xa
+        xa = x
         x = (6-x)**(1/2)
 
         if abs(f(x)) < tol:
-            return x
+            break
+    p = np.log(abs(x - 2) / abs(xa - 2)) / np.log(abs(xa - 2) / abs(xaa - 2))
+    print(p)
+    return x
 
 print(newton(f,d))
 print(secantes(f))
