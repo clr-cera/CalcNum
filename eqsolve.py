@@ -199,8 +199,8 @@ def secantes(f):
     x0 = 5
     x1 = 5.5
     tol = 0.0005
-    f0 = f(0)
     while True:
+        f0 = f(x0)
         f1 = f(x1)
         ds = f1*(x1-x0) / (f1-f0)
         x0 = x1
