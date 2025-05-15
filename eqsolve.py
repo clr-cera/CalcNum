@@ -224,6 +224,38 @@ def ponto_fixo(f):
     print(p)
     return x
 
-print(newton(f,d))
-print(secantes(f))
-print(ponto_fixo(f))
+#print(newton(f,d))
+#print(secantes(f))
+#print(ponto_fixo(f))
+
+
+
+
+def lagrange_interp(xi, yi, x):
+    n = np.size(xi);
+    m = np.size(x);
+
+    L = np.ones((n,m));
+
+    for i in np.arrange(n):
+        for j in np.arrange(n):
+            if(i != j):
+                L[i,:] = (L[i,:]*(x-xi[j]))/(xi[i]-xi[j]);
+
+    y = yi.dot(L);
+    return y;
+
+def newton_interp(xi,yi,x):
+    n = np.size(xi); ni = np.size(x); N = np.ones((n,ni));
+    D = np.zeros((n,n)); D[:,0] = yi;
+
+    for j in np.arange(n-1): # matriz de diferenças divididas
+        for i in np.arange(n-j-1):
+            D[i,j+1] = (D[i+1,j]-D[i,j])/(xi[i+j+1]-xi[i]);
+
+    for i in np.arange(1,n): # loop do produtório da forma de Newton
+        N[i,:] = N[i-1,:]*(x-xi[i-1]);
+
+    y = D[0,:].dot(N)
+
+    return y
