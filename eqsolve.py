@@ -259,3 +259,10 @@ def newton_interp(xi,yi,x):
     y = D[0,:].dot(N)
 
     return y
+
+#Nunca foi testada, pode estar toda quebrada
+def mmq(x, y, k):
+    n = x.len()
+    X = np.vander(x)
+    X = X[:,n-k:n]
+    a = np.linalg.solve((X.T @ X),(X.T @ y.T))
